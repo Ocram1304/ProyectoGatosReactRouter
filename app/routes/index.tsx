@@ -1,73 +1,92 @@
-import { Form } from "react-router"
-import { SPENTCATEGORIES } from "~/data/data"
-import type { Route } from "./+types"
+import { Form, useNavigate } from "react-router"; 
+import { SPENTCATEGORIES } from "~/data/data";
+import type { Route } from "./+types";
 import type { loadSpent } from "~/firebase/fbActions";
 import { LoadSpent } from "~/firebase/fbActions";
 
-
-export async function action({params, request}: Route.ActionArgs) {
+export async function action({ request }: Route.ActionArgs) {
     const formData = await request.formData();
-    
-    
+
+    // Crear un objeto con los datos del formulario
+
     const newSpent: loadSpent = {
-        SpentCategory: formData.get("SpentCategoy") as string,
+        SpentCategory: formData.get("SpentCategory") as string,
         SpentDate: formData.get("SpentDate") as string,
-        SpentQuantity: Number(formData.get("SpentQuantity")) ,
-        SpentName: formData.get(" SpentName") as string
-    }
-    
+        SpentQuantity: Number(formData.get("SpentQuantity")),
+        SpentName: formData.get("SpentName") as string,
+    };
+    console.log("cargando datos");
     try {
         await LoadSpent(newSpent);
-        console.log("Gasto añadido correctamente");
         return { success: true };
     } catch (error) {
         console.error("Error al guardar el gasto:", error);
-        return { success: false, error: "Error al guardar el gasto" }; 
-    } 
+        return { success: false, error: "Error al guardar el gasto" };
+    }
 }
 
-export default function Index(){
-    return(
+export default function Index() {
+    return (
         <>
-            <div className="spent-container"> 
+            <div className="spent-container">
                 <Form method="post">
-
+                    {/* Campo de categoría con datalist */}
                     <div>
-                        <label htmlFor="sepent-category">Categoría</label>
+                        <label htmlFor="#spent-category">Categoría</label>
                         <input
-                            list="spent-category"
+                            list="#spent-category"
                             name="SpentCategory"
                             id="spent-category"
+                            required
                         />
-                        <datalist  id="spent-category">
-                           {
-                            SPENTCATEGORIES.map((item)=>(
-                                <option key={item.id} value={item.category} >{item.category}</option>
-                            ))
-                           } 
+                        <datalist id="#spent-category">
+                            {SPENTCATEGORIES.map((item) => (
+                                <option key={item.id} value={item.category}>
+                                    {item.category}
+                                </option>
+                            ))}
                         </datalist>
                     </div>
-    
+
+                    {/* Campo de fecha */}
                     <div>
-                        <label htmlFor="sepent-date">Fecha</label>
-                        <input type="date" name="SpentDate" id="spent-date" />
+                        <label htmlFor="spent-date">Fecha</label>
+                        <input
+                            type="date"
+                            name="SpentDate"
+                            id="spent-date"
+                            required
+                        />
                     </div>
 
+                    {/* Campo de cantidad */}
                     <div>
-                        <label htmlFor="sepent-quantity">Cantidad</label>
-                        <input type="number" name="SpentQuantity" id="spent-quantity" />
+                        <label htmlFor="spent-quantity">Cantidad</label>
+                        <input
+                            type="number"
+                            name="SpentQuantity"
+                            id="spent-quantity"
+                            required
+                        />
                     </div>
 
+                    {/* Campo de nombre */}
                     <div>
-                        <label htmlFor="sepent-name">Nombre</label>
-                        <input type="datetime-local" name="SpentName" id="spent-name" />
+                        <label htmlFor="spent-name">Nombre</label>
+                        <input
+                            type="text"
+                            name="SpentName"
+                            id="spent-name"
+                            required
+                        />
                     </div>
 
+                    {/* Botón de envío */}
                     <div>
                         <button type="submit">Agregar</button>
                     </div>
                 </Form>
             </div>
         </>
-    )
+    );
 }
