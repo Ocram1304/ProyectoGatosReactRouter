@@ -2,7 +2,7 @@ import {db} from "./firebase";
 import {  addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 
  export type loadSpent =  {
-    SpentID?: string;
+    SpentID?: string,
     SpentCategory: string,
     SpentDate: string,
     SpentQuantity: number,
@@ -62,4 +62,57 @@ export const DowloadSpents = async (categotyS: string = "All"): Promise<bucketSp
         console.error("Error al descargar los gastos:", error);
         throw error; // Lanzar el error para manejarlo en el componente
     }
+};
+
+export type SpentMonthly = {
+    month: string; 
+    totalAmount: number; 
+};
+
+export type SpentsRegister = SpentMonthly[];
+
+export const SpentsPerMonths = async (mesTarget: string = "Current"): Promise<SpentsRegister> => {
+    // Obtener los datos de la BD
+    const bucket = await DowloadSpents("All");
+
+    // Mapear y formatear los datos
+    const filterBucket = bucket.map((sp) => ({
+        month: new Date(sp.SpentDate).toLocaleString("es-ES", { month: 'long' }), 
+        quantity: sp.SpentQuantity, 
+    }));
+
+    // Agrupar los gastos por mes y sumar las cantidades
+    const monthlySpents: { [key: string]: number } = {};
+
+    filterBucket.forEach((spent) => {
+        if (monthlySpents[spent.month]) {
+            monthlySpents[spent.month] += spent.quantity; // Sumar al mes existente
+        } else {
+            monthlySpents[spent.month] = spent.quantity; // Crear nuevo mes
+        }
+    });
+
+    // Convertir el objeto a un array de SpentMonthly
+    const spentsRegister: SpentsRegister = Object.keys(monthlySpents).map((month) => ({
+        month,
+        totalAmount: monthlySpents[month],
+    }));
+
+    // Definir los meses objetivo usando un objeto
+    const currentDate = new Date();
+    const targetMonths = {
+        Current: currentDate.toLocaleString("es-ES", { month: 'long' }), // Mes actual
+        LastMonth: new Date(currentDate.setMonth(currentDate.getMonth() - 1)).toLocaleString("es-ES", { month: 'long' }), // Mes anterior
+        SecondToLast: new Date(currentDate.setMonth(currentDate.getMonth() - 1)).toLocaleString("es-ES", { month: 'long' }), // Hace dos meses
+        ThirdToLast: new Date(currentDate.setMonth(currentDate.getMonth() - 1)).toLocaleString("es-ES", { month: 'long' }), // Hace tres meses
+    };
+
+    // Filtrar según el mes objetivo
+    const targetMonth = targetMonths[mesTarget as keyof typeof targetMonths] || null;
+
+    if (targetMonth) {
+        return spentsRegister.filter((spent) => spent.month === targetMonth);
+    }
+
+    return spentsRegister; // Devolver todos los meses si no se especifica un mes objetivo válido
 };

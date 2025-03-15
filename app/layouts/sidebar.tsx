@@ -13,6 +13,7 @@ export default function Sidebar(){
                         <Link key={item.id} to={`/category/${item.category}`}>{item.category}</Link>
                     ))
                 }
+                <Link to={"/spents"}>Gastos</Link>
             </nav>       
              <div id="content">
                 <Outlet/>
