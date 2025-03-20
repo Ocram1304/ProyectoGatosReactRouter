@@ -28,8 +28,8 @@ export async function action({ request }: Route.ActionArgs) {
 export default function Index() {
     return (
         <>
-            <div className="spent-container">
-                <Form method="post">
+            <div className="container spent-container">
+                <Form method="post" className="add-spent-form">
                     {/* Campo de categoría con datalist */}
                     <div>
                         <label htmlFor="#spent-category">Categoría</label>
@@ -83,7 +83,7 @@ export default function Index() {
 
                     {/* Botón de envío */}
                     <div>
-                        <button type="submit">Agregar</button>
+                        <button type="submit" className="btn btn-primary">Agregar</button>
                     </div>
                 </Form>
             </div>

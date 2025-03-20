@@ -2,7 +2,7 @@ import type { Route } from "./+types"
 import { DowloadSpents, DeleSpent } from "~/firebase/fbActions"
 import { Form } from "react-router";
 import { useState } from "react";
-import type { loadSpent, bucketSpents } from "~/firebase/fbActions";
+import type { loadSpent,} from "~/firebase/fbActions";
 
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -37,7 +37,10 @@ export default function Category({ loaderData }: Route.ComponentProps) {
       <div className="Spents-Container">
           {/* Condición para mostrar un mensaje si no hay datos */}
           {Spents.length === 0 ? (
-              <p>No hay gastos para mostrar.</p>
+              <div className="no-spents-data">
+                <p>No hay gastos para mostrar.</p>
+              </div>
+              
           ) : (
               // Mapeo de los gastos y paso de props al componente
               Spents.map((spentData: loadSpent) => (
@@ -66,24 +69,30 @@ function SpentItem({
 
   return (
       <>
-          <div>
-              <div>
+          <div className="container-fluid category-container ">
+            <div className="row">
+            <div className="col-6 col-sm-2">
+                  <p><span>Categoría:Icono</span></p>
+                </div>
+                <div className="col-6 col-sm-2">
                   <p><span>Categoría:</span> {dataSpent.SpentCategory}</p>
-              </div>
-              <div>
+                </div>
+                <div className="col-6 col-sm-2">
                   <p><span>Fecha:</span> {dataSpent.SpentDate}</p>
-              </div>
-              <div>
+                </div>
+                <div className="col-6 col-sm-2">
                   <p><span>Gasto:</span> {dataSpent.SpentName}</p>
-              </div>
-              <div>
-                  <p><span>Cantidad:</span> {dataSpent.SpentQuantity}</p>
-              </div>
-              <div>
-                  <button type="button" onClick={toggleModal}>
+                </div>
+                <div className="col-6 col-sm-2">
+                  <p><span>Cantidad:</span> ${dataSpent.SpentQuantity}</p>
+                </div>
+                <div className="col-6 col-sm-2">
+                  <button type="button" className="btn btn-danger" onClick={toggleModal}>
                       Borrar
                   </button>
-              </div>
+                </div>
+            </div>
+              
 
               {/* Mostrar la modal si está habilitada */}
               {modal && (

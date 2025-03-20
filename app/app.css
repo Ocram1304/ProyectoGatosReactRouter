@@ -1,13 +1,146 @@
 
-.modal{
+/* || Index || */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; 
+    min-height: 100vh; 
+}
+
+.container .add-spent-form {
+    background-color: rgb(232, 232, 225);
+    padding: 1.5rem;
+    border-radius: 8px; 
+    width: 100%; 
+    max-width: 400px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.container .add-spent-form div {
+    margin-bottom: 1rem; 
+}
+
+.container .add-spent-form div label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem; 
+    font-size: 1rem; 
+}
+
+.container .add-spent-form input {
+    width: 100%; 
+    padding: 0.75rem; 
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    font-size: 1rem; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: border-color 0.3s, box-shadow 0.3s; 
+}
+
+.container .add-spent-form input:focus {
+    border-color: #007bff; 
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); 
+    outline: none; 
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+    .container .add-spent-form {
+        padding: 1rem; /* Menos padding en móviles */
+    }
+
+    .container .add-spent-form input {
+        padding: 0.5rem; /* Menos padding en móviles */
+    }
+}
+
+/* || Categorías || */
+.category-container {
+    margin-top: 1rem; 
+    margin-bottom: 1rem;
+}
+
+.category-container div span {
+    font-weight: bolder;
+    color: #333; 
+}
+
+.category-container div {
+    padding: 0.5rem; 
+}
+
+.category-container .row {
+    background-color: rgb(232, 232, 225);
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease; 
+}
+
+.category-container .row:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+
+.no-spents-data {
+    color: #007bff; 
+    font-size: 1.25rem; 
+    font-weight: bolder;
+    text-align: center;
+    margin: 1rem auto;
+    padding: 1rem;
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+/* Modal */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+
+}
+/* || Gastos del mes || */
+.spents-bill-container {
+    margin: 1rem auto; 
+    text-align: center;
+    padding: 1rem; 
+}
+
+.spents-bill-container form {
+    margin-bottom: 1rem;
+    padding: 1rem; 
+    background-color: #fff; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.spent-bill-results span {
+    font-weight: bold;
+    color: #333; 
+}
+
+.spent-bill-results div {
+    margin: 1rem auto; 
+    background-color: rgb(235, 235, 243);
+    max-width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease; 
+}
+
+.spent-bill-results div:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.divider {
+    border: 1px solid #ccc;
+    margin: 1rem 0; 
 }

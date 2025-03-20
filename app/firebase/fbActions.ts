@@ -83,7 +83,6 @@ export const SpentsPerMonths = async (mesTarget: string = "Current"): Promise<Sp
 
     // Agrupar los gastos por mes y sumar las cantidades
     const monthlySpents: { [key: string]: number } = {};
-
     filterBucket.forEach((spent) => {
         if (monthlySpents[spent.month]) {
             monthlySpents[spent.month] += spent.quantity; // Sumar al mes existente
@@ -98,13 +97,20 @@ export const SpentsPerMonths = async (mesTarget: string = "Current"): Promise<Sp
         totalAmount: monthlySpents[month],
     }));
 
+    // Función para calcular el mes válido
+    const getValidMonth = (offset: number): string => {
+        const currentDate = new Date(); // Crear una nueva fecha para evitar modificar la original
+        const currentMonth = currentDate.getMonth(); // Mes actual (0-11)
+        const targetMonth = (currentMonth - offset + 12) % 12; // Usar módulo para manejar meses negativos
+        return new Date(currentDate.setMonth(targetMonth)).toLocaleString("es-ES", { month: 'long' });
+    };
+
     // Definir los meses objetivo usando un objeto
-    const currentDate = new Date();
     const targetMonths = {
-        Current: currentDate.toLocaleString("es-ES", { month: 'long' }), // Mes actual
-        LastMonth: new Date(currentDate.setMonth(currentDate.getMonth() - 1)).toLocaleString("es-ES", { month: 'long' }), // Mes anterior
-        SecondToLast: new Date(currentDate.setMonth(currentDate.getMonth() - 1)).toLocaleString("es-ES", { month: 'long' }), // Hace dos meses
-        ThirdToLast: new Date(currentDate.setMonth(currentDate.getMonth() - 1)).toLocaleString("es-ES", { month: 'long' }), // Hace tres meses
+        Current: getValidMonth(0), // Mes actual
+        LastMonth: getValidMonth(1), // Mes anterior
+        SecondToLast: getValidMonth(2), // Hace dos meses
+        ThirdToLast: getValidMonth(3), // Hace tres meses
     };
 
     // Filtrar según el mes objetivo

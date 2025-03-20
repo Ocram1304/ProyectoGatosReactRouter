@@ -30,7 +30,7 @@ export default function Gastos({ loaderData }: Route.ComponentProps) {
     const dataToShow = fetcher.data || Defaultdata;
 
     return (
-        <div>
+        <div className="spents-bill-container">
             {/* Formulario para seleccionar el mes */}
             <fetcher.Form method="post">
                 <input
@@ -50,7 +50,7 @@ export default function Gastos({ loaderData }: Route.ComponentProps) {
             </fetcher.Form>
 
             {/* Contenedor de resultados */}
-            <div className="spentBillContainer">
+            <div className="spent-bill-results">
                 {dataToShow.length === 0 ? (
                     <p>No hay registros</p>
                 ) : (
@@ -58,8 +58,9 @@ export default function Gastos({ loaderData }: Route.ComponentProps) {
                         <div key={item.month}>
                             <h3>Gastos del mes</h3>
                             <p>
-                                <span>Mes:</span> {item.month}, <span>Total:</span> {item.totalAmount}
+                                <span>Mes:</span> {item.month}, <span>Total:</span> ${item.totalAmount}
                             </p>
+                            <div className="divider"></div>
                         </div>
                     ))
                 )}
