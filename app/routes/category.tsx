@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { loadSpent,} from "~/firebase/fbActions";
 
 
+
 export async function loader({ params }: Route.LoaderArgs) {
   const cate = params.category;
   const Spents = await DowloadSpents(cate);
@@ -72,7 +73,8 @@ function SpentItem({
           <div className="container-fluid category-container ">
             <div className="row">
             <div className="col-6 col-sm-2">
-                  <p><span>Categoría:Icono</span></p>
+                  <p><span>{dataSpent.SpentCategory &&(<CategoryIcon
+                   category={dataSpent.SpentCategory}/>)}</span></p>
                 </div>
                 <div className="col-6 col-sm-2">
                   <p><span>Categoría:</span> {dataSpent.SpentCategory}</p>
@@ -150,4 +152,18 @@ function Modalwindow({
           </div>
       </div>
   );
+}
+
+function CategoryIcon({category}:{category:string}){
+  const CATEGORYICON = {
+    Ropa: <i className="bi bi-bag-dash-fill"></i>,
+    Transporte: <i className="bi bi-bus-front-fill"></i>,
+    Servicios: <i className="bi bi-receipt"></i>,
+    Recreación: <i className="bi bi-controller"></i>,
+    All: <i className="bi bi-globe"></i>
+  }
+  const renderizeCategory  = CATEGORYICON[category as keyof typeof CATEGORYICON] || <p>No Icon</p>;
+  return(
+    renderizeCategory
+  )
 }
