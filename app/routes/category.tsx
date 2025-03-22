@@ -156,13 +156,13 @@ function Modalwindow({
 
 function CategoryIcon({category}:{category:string}){
   const CATEGORYICON = {
-    Ropa: <i className="bi bi-bag-dash-fill"></i>,
-    Transporte: <i className="bi bi-bus-front-fill"></i>,
-    Servicios: <i className="bi bi-receipt"></i>,
-    Recreación: <i className="bi bi-controller"></i>,
-    All: <i className="bi bi-globe"></i>
+    Ropa: <i className="bi bi-bag-dash-fill icon-style"></i>,
+    Transporte: <i className="bi bi-bus-front-fill icon-style"></i>,
+    Servicios: <i className="bi bi-receipt icon-style"></i>,
+    Recreación: <i className="bi bi-controller icon-style"></i>,
+    All: <i className="bi bi-globe icon-style"></i>
   }
-  const renderizeCategory  = CATEGORYICON[category as keyof typeof CATEGORYICON] || <p>No Icon</p>;
+  const renderizeCategory  = CATEGORYICON[category as keyof typeof CATEGORYICON] || <p className="icon-style">No Icon</p>;
   return(
     renderizeCategory
   )

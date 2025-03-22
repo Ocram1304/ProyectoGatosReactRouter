@@ -81,7 +81,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
-
+.icon-style {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-right: 0.5rem;
+}
 .no-spents-data {
     color: #007bff; 
     font-size: 1.25rem; 
