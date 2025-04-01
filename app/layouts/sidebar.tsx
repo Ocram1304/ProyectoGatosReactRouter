@@ -1,8 +1,8 @@
-import { Outlet, Link } from "react-router"
+import { Outlet, Link, useNavigation } from "react-router"
 import { SPENTCATEGORIES } from "~/data/data"
 export default function Sidebar(){
 
-    
+    const navigation = useNavigation();
     return(
 
         <>
@@ -33,7 +33,7 @@ export default function Sidebar(){
             </nav>
 
 
-             <div id="content">
+             <div id="content" className={navigation.state === "loading" ? "loading" : ""}>
                 <Outlet/>
             </div>
         </>

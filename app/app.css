@@ -148,3 +148,10 @@
     border: 1px solid #ccc;
     margin: 1rem 0; 
 }
+
+#content.loading {
+    opacity: 0.25;
+    transition: opacity 200ms;
+    transition-delay: 200ms;
+}
+  
