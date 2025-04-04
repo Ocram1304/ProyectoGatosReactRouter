@@ -1,6 +1,7 @@
 # Descripción del Proyecto
 
-Es una app que registra los gastos mensuales y realizan un calculo acorde a un mes arbitrario
+Es una app que registra los gastos mensuales, y se puede consultar el total de gastos
+acorde a un mes arbitrario.
 
 ## Objetivos del proyecto
 
